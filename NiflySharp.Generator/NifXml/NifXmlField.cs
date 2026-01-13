@@ -89,6 +89,12 @@ namespace NiflySharp.Generator
         [XmlAttribute("calc")]
         public string Calculate { get; set; }
 
+        /// <summary>
+        /// Abstract field. Don't generate automatic IO code.
+        /// </summary>
+        [XmlAttribute("abstract")]
+        public bool Abstract { get; set; }
+
         [XmlText]
         public string Comment { get; set; }
     }
