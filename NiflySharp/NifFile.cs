@@ -186,7 +186,7 @@ namespace NiflySharp
                 Clear();
                 return 1;
             }
-            
+
             /*
             if (!(Header.Version.FileVersion >= NiVersion.ToFile(20, 2, 0, 7) && (Header.Version.UserVersion == 11 || Header.Version.UserVersion == 12)))
             {
@@ -195,7 +195,6 @@ namespace NiflySharp
                 return 2;
             }
             */
-
             var streamReversible = new NiStreamReversible(streamReader);
 
             Blocks = new List<INiObject>(Header.BlockCount);
@@ -315,6 +314,7 @@ namespace NiflySharp
             Header.Write(streamWriter);
 
             var streamReversible = new NiStreamReversible(streamWriter);
+            
             long blockStartPos = streamWriter.Writer.BaseStream.Position;
 
             // Retrieve block sizes from stream after writing each block
