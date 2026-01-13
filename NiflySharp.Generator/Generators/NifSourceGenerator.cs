@@ -809,6 +809,12 @@ namespace NiflySharp.Bitfields
                     fieldNamesAndTypes.Add($"{origFieldName}_{fieldTypeName}");
                 }
 
+                if (field.Abstract)
+                {
+                    Debug.WriteLine($"Skipping IO code generation for abstract field '{field.Name}'.");
+                    continue;
+                }
+
                 string syncFuncField = string.Empty;
                 if (!string.IsNullOrWhiteSpace(field.Length))
                 {
