@@ -211,6 +211,16 @@ namespace NiflySharp
                     blockTypeStr = nistr.Content;
                 }
 
+                int dataStreamUsage = 0;
+                int dataStreamAccess = 0;
+                if (blockTypeStr.StartsWith("NiDataStream\x01"))
+                {
+                    var parts = blockTypeStr.Split('\x01');
+                    blockTypeStr = parts[0];
+                    dataStreamUsage = int.Parse(parts[1]);
+                    dataStreamAccess = int.Parse(parts[2]);
+                }
+
                 NiObject block = null;
                 INiStreamable blockStreamable = null;
 
@@ -233,6 +243,17 @@ namespace NiflySharp
                     //streamReversible.Argument = null;
                     blockStreamable.Sync(streamReversible);
                     block = blockStreamable as NiObject;
+                }
+
+                if (blockTypeStr == "NiDataStream")
+                {
+                    NiDataStream dataStream = block as NiDataStream;
+                    if (dataStream != null)
+                    {
+                        dataStream.Usage = (DataStreamUsage)dataStreamUsage;
+                        dataStream.Access = (DataStreamAccess)dataStreamAccess;
+                    }
+                    
                 }
 
                 if (block != null)
